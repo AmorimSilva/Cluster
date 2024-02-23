@@ -1,0 +1,36 @@
+clusterreal <- kmeans(x=VHRFC_SF$layer, centers=3)
+clusterreal
+install.packages('useful')
+library(useful)
+plot(clusterreal, data=VHRFC_SF$layer)
+
+plot(clusterreal)
+
+
+write.table(clusterreal$cluster)
+####
+library(readxl)
+VHRFC_SF_2_ <- read_excel("D:/TCC-REL/SF/VHRFC_SF (2).xlsx")
+View(VHRFC_SF_2_)
+
+install.packages('factoextra')
+library(factoextra)
+
+
+df=scale(VHRFC_SF_2_)
+head(df)
+
+#DEFINIR A QUANTIDADE DE GRUPOS, NESTE CASO FORAM 4
+
+fviz_nbclust(df, kmeans, method = "wss")+
+  geom_vline(xintercept = 4, linetype = 2)
+
+set.seed(123)
+
+km.res=kmeans(df, 4, nstart=25)
+
+print(km.res)
+
+write.table(km.res$cluster,"D:/TCC-REL/SF/df.xlsx")
+
+
